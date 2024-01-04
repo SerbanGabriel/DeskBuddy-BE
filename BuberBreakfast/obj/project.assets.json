@@ -124,11 +124,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\C#\\BuberBreakfast\\BuberBreakfast\\BuberBreakfast.csproj",
+      "projectUniqueName": "D:\\C#\\BuberBreakfast\\BuberBreakfast\\BuberBreakfast.csproj",
       "projectName": "BuberBreakfast",
-      "projectPath": "d:\\C#\\BuberBreakfast\\BuberBreakfast\\BuberBreakfast.csproj",
+      "projectPath": "D:\\C#\\BuberBreakfast\\BuberBreakfast\\BuberBreakfast.csproj",
       "packagesPath": "C:\\Users\\sgaby\\.nuget\\packages\\",
-      "outputPath": "d:\\C#\\BuberBreakfast\\BuberBreakfast\\obj\\",
+      "outputPath": "D:\\C#\\BuberBreakfast\\BuberBreakfast\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sgaby\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -145,8 +145,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "d:\\C#\\BuberBreakfast\\BuberBreakfast.Contracts\\BuberBreakfast.Contracts.csproj": {
-              "projectPath": "d:\\C#\\BuberBreakfast\\BuberBreakfast.Contracts\\BuberBreakfast.Contracts.csproj"
+            "D:\\C#\\BuberBreakfast\\BuberBreakfast.Contracts\\BuberBreakfast.Contracts.csproj": {
+              "projectPath": "D:\\C#\\BuberBreakfast\\BuberBreakfast.Contracts\\BuberBreakfast.Contracts.csproj"
             }
           }
         }
