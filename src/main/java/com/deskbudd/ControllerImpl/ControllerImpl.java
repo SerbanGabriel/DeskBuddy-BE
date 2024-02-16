@@ -56,6 +56,7 @@ public class ControllerImpl {
         userLoginModel1.setFirstName(user.getFirstName());
         userLoginModel1.setImage(user.getPhoto());
         userLoginModel1.setIsAdmin(user.getIsAdmin());
+        userLoginModel1.setId(user.getId());
         return userLoginModel1;
     }
 
@@ -68,5 +69,13 @@ public class ControllerImpl {
 
     public void saveItem(ItemModel item){
         itemRepo.save(item);
+    }
+
+    public void addToCart(Integer itemId, Long userId){
+        Optional<UserModel> user = this.userRepo.findById(userId);
+        Optional<ItemModel> item = this.itemRepo.findById(itemId);
+        user.get().getItems().add(item.get());
+
+        this.userRepo.save(user.get());
     }
 }

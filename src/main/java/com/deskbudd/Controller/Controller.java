@@ -99,4 +99,11 @@ public class Controller {
         }
         this.controller.saveItem(itemModel);
     }
+
+
+    @CrossOrigin
+    @PostMapping("addToCart/{itemId}/{userId}")
+    public void addToCart(@PathVariable Integer itemId, @PathVariable Long userId){
+        this.controller.addToCart(itemId, userId);
+    }
 }
