@@ -28,6 +28,8 @@ public class UserModel {
 
     private String Password;
 
+    private Boolean isAdmin;
+
     @ManyToMany
     List<ItemModel> items;
 }

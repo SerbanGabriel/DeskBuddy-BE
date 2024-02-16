@@ -22,6 +22,10 @@ public class ControllerImpl {
         this.userRepo = userRepo;
     }
 
+    public void  delete(Integer id){
+        this.itemRepo.deleteById(id);
+    }
+
     public String searchForItemBy(String searchText) {
         return searchText;
     }
@@ -51,13 +55,18 @@ public class ControllerImpl {
         userLoginModel1.setPassword(user.getPassword());
         userLoginModel1.setFirstName(user.getFirstName());
         userLoginModel1.setImage(user.getPhoto());
+        userLoginModel1.setIsAdmin(user.getIsAdmin());
         return userLoginModel1;
     }
 
-    public void saveImage(byte[] iamge){
+    public void saveImage(byte[] iamge) {
         UserModel user = this.userRepo.findByEmail("sgaby100@gmail.com");
 
         user.setPhoto(iamge);
         this.userRepo.save(user);
+    }
+
+    public void saveItem(ItemModel item){
+        itemRepo.save(item);
     }
 }

@@ -9,5 +9,6 @@ public class UserLoginModel {
     String email;
     String firstName;
     String password;
+    Boolean isAdmin;
     byte[] image;
 }
