@@ -12,6 +12,7 @@ import org.springframework.util.SerializationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,9 +58,12 @@ public class Controller {
 
     @CrossOrigin
     @PostMapping("/upload")
-    public void uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
+    public ImageModel uploadImage(@RequestParam("image") MultipartFile file, String email) throws IOException {
         byte[] byteArr = file.getBytes();
-        this.controller.saveImage(byteArr);
+        this.controller.saveImage(byteArr,email);
+        ImageModel image = new ImageModel();
+        image.setPhoto(byteArr);
+        return image;
     }
 
     @CrossOrigin

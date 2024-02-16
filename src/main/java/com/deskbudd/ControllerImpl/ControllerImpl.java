@@ -59,10 +59,10 @@ public class ControllerImpl {
         return userLoginModel1;
     }
 
-    public void saveImage(byte[] iamge) {
-        UserModel user = this.userRepo.findByEmail("sgaby100@gmail.com");
+    public void saveImage(byte[] image,String email) {
+        UserModel user = this.userRepo.findByEmail(email);
 
-        user.setPhoto(iamge);
+        user.setPhoto(image);
         this.userRepo.save(user);
     }
 
