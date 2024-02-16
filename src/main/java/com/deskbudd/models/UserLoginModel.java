@@ -3,8 +3,11 @@ package com.deskbudd.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
+
 public class UserLoginModel {
     Long id;
     String email;
@@ -12,4 +15,5 @@ public class UserLoginModel {
     String password;
     Boolean isAdmin;
     byte[] image;
+    List<ItemModel> items;
 }

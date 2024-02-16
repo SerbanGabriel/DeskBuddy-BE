@@ -51,16 +51,16 @@ public class Controller {
     }
 
     @CrossOrigin
-    @PostMapping("/login")
-    UserLoginModel getExistingUser(@RequestBody UserLoginModel userLoginModel) {
-        return this.controller.findUser(userLoginModel);
+    @PostMapping("/login/{email}")
+    UserLoginModel getExistingUser(@PathVariable String email) {
+        return this.controller.findUserEmail(email);
     }
 
     @CrossOrigin
-    @PostMapping("/upload")
-    public ImageModel uploadImage(@RequestParam("image") MultipartFile file, String email) throws IOException {
+    @PostMapping("/upload/{id}")
+    public ImageModel uploadImage(@RequestParam("image") MultipartFile file,@PathVariable Long id) throws IOException {
         byte[] byteArr = file.getBytes();
-        this.controller.saveImage(byteArr,email);
+        this.controller.saveImage(byteArr,id);
         ImageModel image = new ImageModel();
         image.setPhoto(byteArr);
         return image;
@@ -105,5 +105,23 @@ public class Controller {
     @PostMapping("addToCart/{itemId}/{userId}")
     public void addToCart(@PathVariable Integer itemId, @PathVariable Long userId){
         this.controller.addToCart(itemId, userId);
+    }
+
+    @CrossOrigin
+    @GetMapping("userItems/{userId}")
+    public UserLoginModel addToCart(@PathVariable Long userId){
+        return this.controller.findUserById(userId);
+    }
+
+    @CrossOrigin
+    @GetMapping("deleteItemFromUser/{id}/{userId}")
+    public void addToCart(@PathVariable Long id,@PathVariable Long userId){
+         this.controller.deleteItemFromUser(id,userId);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("deleteAccount/{id}")
+    public void deleteUser(@PathVariable Long id){
+        this.controller.deleteUser(id);
     }
 }
