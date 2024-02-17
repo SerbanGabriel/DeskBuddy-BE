@@ -2,10 +2,7 @@ package com.deskbudd.ControllerImpl;
 
 import com.deskbudd.Repo.ItemRepo;
 import com.deskbudd.Repo.UserRepo;
-import com.deskbudd.models.ItemModel;
-import com.deskbudd.models.UserLoginModel;
-import com.deskbudd.models.UserModel;
-import com.deskbudd.models.UserRegisterModelRequest;
+import com.deskbudd.models.*;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 
@@ -92,10 +89,12 @@ public class ControllerImpl {
             }
         }
             if(checkIfItemExist(user.get().getItems(), itemId)){
+
                 this.userRepo.save(user.get());
             }
             else{
                 user.get().getItems().add(item.get());
+                item.get().setCount(1);
                 this.userRepo.save(user.get());
             }
     }
@@ -149,9 +148,44 @@ public class ControllerImpl {
 
         userLoginModel.setId(user.getId());
         userLoginModel.setItems(user.getItems());
+        userLoginModel.setIsAdmin(user.getIsAdmin());
         userLoginModel.setImage(user.getPhoto());
         userLoginModel.setEmail(user.getEmail());
+        userLoginModel.setFirstName(user.getFirstName());
         userLoginModel.setPassword(user.getPassword());
         return userLoginModel;
+    }
+
+    public UserLoginModel updateUsers(Long id, UserFormRequest userFormRequest){
+        Optional<UserModel> user = this.userRepo.findById(id);
+        UserLoginModel userLoginModel = new UserLoginModel();
+
+        if(!userFormRequest.getEmail().isEmpty()){
+            user.get().setEmail(userFormRequest.getEmail());
+        }
+        if(!userFormRequest.getFirstName().isEmpty()){
+            user.get().setFirstName(userFormRequest.getFirstName());
+        }
+        if(!userFormRequest.getLastName().isEmpty()){
+            user.get().setLastName(userFormRequest.getLastName());
+        }
+        if(!userFormRequest.getPassword().isEmpty()){
+            user.get().setPassword(userFormRequest.getPassword());
+        }
+
+        userLoginModel.setFirstName(user.get().getFirstName());
+        userLoginModel.setId(user.get().getId());
+        userLoginModel.setEmail(user.get().getEmail());
+        userLoginModel.setPassword(user.get().getPassword());
+        userLoginModel.setItems(user.get().getItems());
+        userLoginModel.setIsAdmin(user.get().getIsAdmin());
+        userLoginModel.setImage(user.get().getPhoto());
+        this.userRepo.save(user.get());
+        return userLoginModel;
+    }
+
+    public List<ItemModel> findItemBySearchText(String searchText){
+        return this.itemRepo.findByTitleContainingIgnoreCase(searchText);
+
     }
 }

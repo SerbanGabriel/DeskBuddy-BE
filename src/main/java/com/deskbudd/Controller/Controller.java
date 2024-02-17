@@ -68,6 +68,12 @@ public class Controller {
     }
 
     @CrossOrigin
+    @PutMapping("/saveUserData/{id}")
+    public UserLoginModel uploadItems(@PathVariable Long id, @RequestBody UserFormRequest userFormRequest){
+        return this.controller.updateUsers(id,userFormRequest);
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/preview", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ImageModel previewCard(@RequestPart String user, @RequestPart Optional<MultipartFile> firstImage) throws IOException {
         ImageModel image = new ImageModel();
@@ -119,6 +125,14 @@ public class Controller {
     public void deleteCart(@PathVariable Long id,@PathVariable Long userId){
          this.controller.deleteItemFromUser(id,userId);
     }
+
+    @CrossOrigin
+    @GetMapping("findItemBySearchText/{searchText}")
+    public List<ItemModel> findItem(@PathVariable String searchText){
+       return this.controller.findItemBySearchText(searchText);
+    }
+
+
 
     @CrossOrigin
     @DeleteMapping("deleteAccount/{id}")
