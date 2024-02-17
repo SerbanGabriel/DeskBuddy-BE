@@ -21,6 +21,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -77,7 +78,7 @@ public class Controller {
 
     @CrossOrigin
     @DeleteMapping("deleteItem/{id}")
-        public void deleteItem(@PathVariable Integer id){
+        public void deleteItem(@PathVariable Long id){
         this.controller.delete(id);
         }
 
@@ -103,7 +104,7 @@ public class Controller {
 
     @CrossOrigin
     @PostMapping("addToCart/{itemId}/{userId}")
-    public void addToCart(@PathVariable Integer itemId, @PathVariable Long userId){
+    public void addToCart(@PathVariable Long itemId, @PathVariable Long userId){
         this.controller.addToCart(itemId, userId);
     }
 
@@ -115,7 +116,7 @@ public class Controller {
 
     @CrossOrigin
     @GetMapping("deleteItemFromUser/{id}/{userId}")
-    public void addToCart(@PathVariable Long id,@PathVariable Long userId){
+    public void deleteCart(@PathVariable Long id,@PathVariable Long userId){
          this.controller.deleteItemFromUser(id,userId);
     }
 
@@ -124,4 +125,16 @@ public class Controller {
     public void deleteUser(@PathVariable Long id){
         this.controller.deleteUser(id);
     }
+    @CrossOrigin
+    @GetMapping("addItemCount/{id}/{userId}")
+    public void addCountToItem(@PathVariable Long id, @PathVariable Long userId){
+        this.controller.addItemCart(id,userId);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("removeCountItem/{id}/{userId}")
+    public void removeCountItem(@PathVariable Long id, @PathVariable Long userId){
+        this.controller.deleteItemCount(id,userId);
+    }
+
 }

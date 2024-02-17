@@ -25,7 +25,7 @@ public class ControllerImpl {
         this.userRepo = userRepo;
     }
 
-    public void  delete(Integer id){
+    public void  delete(Long id){
         this.itemRepo.deleteById(id);
     }
 
@@ -80,7 +80,7 @@ public class ControllerImpl {
         itemRepo.save(item);
     }
 
-    public void addToCart(Integer itemId, Long userId){
+    public void addToCart(Long itemId, Long userId){
         Optional<UserModel> user = this.userRepo.findById(userId);
         Optional<ItemModel> item = this.itemRepo.findById(itemId);
 
@@ -88,15 +88,20 @@ public class ControllerImpl {
             if(userItem.getId().equals(item.get().getId())){
                 userItem.setCount(userItem.getCount() + 1);
                 this.isItemPresent = true;
-                return;
+                break;
             }
         }
-        if(this.isItemPresent){
-            this.userRepo.save(user.get());
-        }else{
-            user.get().getItems().add(item.get());
-            this.userRepo.save(user.get());
-        }
+            if(checkIfItemExist(user.get().getItems(), itemId)){
+                this.userRepo.save(user.get());
+            }
+            else{
+                user.get().getItems().add(item.get());
+                this.userRepo.save(user.get());
+            }
+    }
+
+    private boolean checkIfItemExist(List<ItemModel> items, Long id){
+        return items.stream().anyMatch(o -> o.getId().equals(id));
     }
 
     public void deleteItemFromUser(Long id, Long userId){
@@ -113,7 +118,30 @@ public class ControllerImpl {
         this.userRepo.deleteById(id);
     }
 
+    public void addItemCart(Long id,Long userId){
+        Optional<UserModel> user = this.userRepo.findById(userId);
+        for(ItemModel model : user.get().getItems()){
+            if(model.getId().equals(id)){
+                    model.setCount(model.getCount()+1);
+            }
+        }
+        this.userRepo.save(user.get());
+    }
 
+    public void deleteItemCount(Long id,Long userId){
+        Optional<UserModel> user = this.userRepo.findById(userId);
+        for(ItemModel model : user.get().getItems()){
+            if(model.getId().equals(id)){
+                model.setCount(model.getCount()-1);
+                if(model.getCount() == 0){
+                    user.get().getItems().remove(model);
+                    break;
+                }
+            }
+        }
+
+        this.userRepo.save(user.get());
+    }
     public UserLoginModel findUserEmail(String email){
         UserModel user = this.userRepo.findByEmail(email);
 
