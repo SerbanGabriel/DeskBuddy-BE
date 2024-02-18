@@ -19,4 +19,6 @@ public class ItemRequestModel {
     private String description;
     private double price;
     private double count;
+    private Long  cardId;
+    private String editImage;
 }

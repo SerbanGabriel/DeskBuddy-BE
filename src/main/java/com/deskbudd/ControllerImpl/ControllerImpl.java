@@ -74,6 +74,19 @@ public class ControllerImpl {
     }
 
     public void saveItem(ItemModel item){
+        if(item.getId() != null){
+            Optional<ItemModel> foundItem = this.itemRepo.findById(item.getId());
+            foundItem.get().setTitle(item.getTitle());
+            foundItem.get().setDescription(item.getDescription());
+            foundItem.get().setPrice(item.getPrice());
+            if(item.getImage1() != null){
+                foundItem.get().setImage1(item.getImage1());
+            }
+            itemRepo.save(foundItem.get());
+            return;
+        }
+
+
         itemRepo.save(item);
     }
 

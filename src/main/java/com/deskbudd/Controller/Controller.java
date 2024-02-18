@@ -94,11 +94,13 @@ public class Controller {
     public void saveCard(@RequestPart String user, @RequestPart Optional<MultipartFile> firstImage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ItemRequestModel item = objectMapper.readValue(user, ItemRequestModel.class);
+
         ItemModel itemModel = new ItemModel();
         itemModel.setDescription(item.getDescription());
         itemModel.setTitle(item.getTitle());
         itemModel.setPrice(item.getPrice());
         itemModel.setCount(item.getCount());
+        itemModel.setId(item.getCardId());
         if(firstImage.isPresent()){
             byte[] img1 = firstImage.get().getBytes();
             itemModel.setImage1(img1);
