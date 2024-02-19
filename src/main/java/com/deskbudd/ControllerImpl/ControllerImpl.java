@@ -23,6 +23,11 @@ public class ControllerImpl {
     }
 
     public void  delete(Long id){
+        List<UserModel> users = this.userRepo.findAll();
+
+            for(UserModel user : users){
+                user.getItems().removeIf(item -> item.getId().equals(id));
+            }
         this.itemRepo.deleteById(id);
     }
 
@@ -79,6 +84,7 @@ public class ControllerImpl {
             foundItem.get().setTitle(item.getTitle());
             foundItem.get().setDescription(item.getDescription());
             foundItem.get().setPrice(item.getPrice());
+            foundItem.get().setCount(item.getCount());
             if(item.getImage1() != null){
                 foundItem.get().setImage1(item.getImage1());
             }
@@ -96,18 +102,17 @@ public class ControllerImpl {
 
         for(ItemModel userItem : user.get().getItems()) {
             if(userItem.getId().equals(item.get().getId())){
-                userItem.setCount(userItem.getCount() + 1);
+                userItem.setUserItemCount(userItem.getUserItemCount() + 1);
                 this.isItemPresent = true;
                 break;
             }
         }
             if(checkIfItemExist(user.get().getItems(), itemId)){
-
                 this.userRepo.save(user.get());
             }
             else{
                 user.get().getItems().add(item.get());
-                item.get().setCount(1);
+                item.get().setUserItemCount(1);
                 this.userRepo.save(user.get());
             }
     }
@@ -134,7 +139,7 @@ public class ControllerImpl {
         Optional<UserModel> user = this.userRepo.findById(userId);
         for(ItemModel model : user.get().getItems()){
             if(model.getId().equals(id)){
-                    model.setCount(model.getCount()+1);
+                    model.setUserItemCount(model.getUserItemCount()+1);
             }
         }
         this.userRepo.save(user.get());
@@ -144,8 +149,8 @@ public class ControllerImpl {
         Optional<UserModel> user = this.userRepo.findById(userId);
         for(ItemModel model : user.get().getItems()){
             if(model.getId().equals(id)){
-                model.setCount(model.getCount()-1);
-                if(model.getCount() == 0){
+                model.setUserItemCount(model.getUserItemCount()-1);
+                if(model.getUserItemCount() == 0){
                     user.get().getItems().remove(model);
                     break;
                 }

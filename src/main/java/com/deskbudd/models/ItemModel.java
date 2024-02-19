@@ -21,5 +21,6 @@ public class ItemModel {
     private byte[] image1;
     private byte[] image2;
     private double count;
+    private double userItemCount;
     private double price;
 }
